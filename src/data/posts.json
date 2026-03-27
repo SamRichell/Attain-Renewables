@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "5 Reasons to Switch to Solar Energy Today",
+    "slug": "5-reasons-to-switch-to-solar",
+    "date": "2025-02-10",
+    "excerpt": "Discover the financial and environmental benefits of solar panels...",
+    "content": "<p>Solar energy is more affordable than ever. With government incentives and falling equipment costs, now is the perfect time to invest.</p><p>Not only does solar reduce your electricity bills, but it also increases your property value and helps combat climate change.</p>",
+    "image": "https://placehold.co/600x400?text=Solar+Blog"
+  },
+  {
+    "id": 2,
+    "title": "How to Choose the Right Battery Storage System",
+    "slug": "how-to-choose-battery-storage",
+    "date": "2025-01-28",
+    "excerpt": "Capacity, chemistry, and compatibility – key factors for picking the best battery...",
+    "content": "<p>Battery storage is crucial for maximizing self‑consumption. Consider your energy usage patterns, the battery's depth of discharge, and whether it supports backup power.</p><p>We recommend lithium‑iron‑phosphate (LFP) batteries for their safety and longevity.</p>",
+    "image": "https://placehold.co/600x400?text=Battery+Blog"
+  },
+  {
+    "id": 3,
+    "title": "Wind Turbines for Urban Areas: What You Need to Know",
+    "slug": "wind-turbines-urban-areas",
+    "date": "2025-01-15",
+    "excerpt": "Vertical axis turbines are changing the game for city dwellers...",
+    "content": "<p>Traditional wind turbines require high wind speeds and open space. New vertical axis models are compact, quiet, and can generate power even in turbulent urban wind conditions.</p><p>Check local regulations and conduct a site assessment before installation.</p>",
+    "image": "https://placehold.co/600x400?text=Wind+Turbine+Blog"
+  }
+]
