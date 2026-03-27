@@ -1,3 +1,17 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import postsData from '../data/posts.json'
+
+const route = useRoute()
+const post = ref(null)
+
+onMounted(() => {
+  const slug = route.params.slug
+  post.value = postsData.find(p => p.slug === slug) || null
+})
+</script>
+
 <template>
   <div class="container mx-auto px-6 py-12">
     <div v-if="post" class="max-w-3xl mx-auto">
@@ -12,17 +26,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import postsData from '../data/posts.json'
-
-const route = useRoute()
-const post = ref(null)
-
-onMounted(() => {
-  const slug = route.params.slug
-  post.value = postsData.find(p => p.slug === slug) || null
-})
-</script>

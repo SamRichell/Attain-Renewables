@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Monocrystalline Solar Panel 400W",
+    "description": "High-efficiency panel with 21% conversion rate, ideal for residential and commercial rooftops.",
+    "price": "€180",
+    "category": "Solar",
+    "image": "https://placehold.co/600x400?text=Solar+Panel"
+  },
+  {
+    "id": 2,
+    "name": "Vertical Axis Wind Turbine 5kW",
+    "description": "Quiet, bird-friendly turbine perfect for urban and suburban environments.",
+    "price": "€4,200",
+    "category": "Wind",
+    "image": "https://placehold.co/600x400?text=Wind+Turbine"
+  },
+  {
+    "id": 3,
+    "name": "Lithium-ion Battery 10kWh",
+    "description": "Modular storage system with 10-year warranty, scalable to 100kWh.",
+    "price": "€3,500",
+    "category": "Battery",
+    "image": "https://placehold.co/600x400?text=Battery"
+  },
+  {
+    "id": 4,
+    "name": "Bifacial Solar Panel 550W",
+    "description": "Generates power from both sides, boosting yield by up to 30%.",
+    "price": "€250",
+    "category": "Solar",
+    "image": "https://placehold.co/600x400?text=Bifacial+Solar"
+  },
+  {
+    "id": 5,
+    "name": "Horizontal Axis Wind Turbine 15kW",
+    "description": "Heavy-duty turbine for farms and small businesses.",
+    "price": "€12,800",
+    "category": "Wind",
+    "image": "https://placehold.co/600x400?text=Horizontal+Turbine"
+  },
+  {
+    "id": 6,
+    "name": "Grid-Tie Inverter 8kW",
+    "description": "Smart inverter with monitoring app, compatible with all major brands.",
+    "price": "€950",
+    "category": "Inverter",
+    "image": "https://placehold.co/600x400?text=Inverter"
+  }
+]
