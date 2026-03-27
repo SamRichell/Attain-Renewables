@@ -372,17 +372,20 @@ function createObserver(
   flag: { value: boolean },
   threshold = 0.15
 ) {
-  if (!target) return
+  if (!target) return;
+
   const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        flag.value = true
-        observer.disconnect()
+    (entries) => {
+      const firstEntry = entries[0];
+      if (firstEntry?.isIntersecting) {
+        flag.value = true;
+        observer.disconnect();
       }
     },
     { threshold }
-  )
-  observer.observe(target)
+  );
+
+  observer.observe(target);
 }
  
 /*
