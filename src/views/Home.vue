@@ -370,7 +370,7 @@ const ctaVisible      = ref(false)
 function createObserver(
   target: HTMLElement | null,
   flag: { value: boolean },
-  threshold = 0.15
+  threshold = 0.3
 ) {
   if (!target) return;
 
