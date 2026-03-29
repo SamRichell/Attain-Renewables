@@ -54,7 +54,6 @@
       >
         ← Previous
       </button>
- 
       <button
         v-for="page in totalPages"
         :key="page"
@@ -66,7 +65,6 @@
       >
         {{ page }}
       </button>
- 
       <button
         @click="goToPage(currentPage + 1)"
         :disabled="currentPage === totalPages"
@@ -82,35 +80,24 @@
 import { ref, computed } from 'vue'
 import productsData from '../data/products.json'
  
-/*
-  SCALABILITY NOTE:
-  Products are now loaded from src/data/products.json rather than being
-  hardcoded in this component. This means you can edit one JSON file to
-  update products without touching component code.
- 
-  However, the same bundle-size concern applies as with posts.json —
-  all products are downloaded by every visitor. For catalogues with
-  hundreds of products, follow the backend guide (in the project README)
-  to fetch from a Strapi or Express API instead.
-*/
- 
 const PRODUCTS_PER_PAGE = 6
  
-const allProducts = ref(productsData)
-const currentPage = ref(1)
+const allProducts      = productsData
+const currentPage      = ref(1)
+const selectedCategory = ref('All')
  
-// Dynamically build the category list from the data
+// Build category list dynamically from the data so adding a new category
+// to products.json automatically appears in the filter tabs.
 const categories = computed(() => {
-  const unique = new Set(allProducts.value.map(p => p.category))
+  const unique = new Set(allProducts.map(p => p.category))
   return ['All', ...Array.from(unique)]
 })
  
-const selectedCategory = ref('All')
- 
-const filteredProducts = computed(() => {
-  if (selectedCategory.value === 'All') return allProducts.value
-  return allProducts.value.filter(p => p.category === selectedCategory.value)
-})
+const filteredProducts = computed(() =>
+  selectedCategory.value === 'All'
+    ? allProducts
+    : allProducts.filter(p => p.category === selectedCategory.value)
+)
  
 const totalPages = computed(() =>
   Math.max(1, Math.ceil(filteredProducts.value.length / PRODUCTS_PER_PAGE))
@@ -123,7 +110,7 @@ const paginatedProducts = computed(() => {
  
 function selectCategory(cat: string) {
   selectedCategory.value = cat
-  currentPage.value = 1 // reset to page 1 when filter changes
+  currentPage.value      = 1
 }
  
 function goToPage(page: number) {
