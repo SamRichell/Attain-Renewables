@@ -27,7 +27,7 @@
         </p>
         <div class="hero-actions animate-fade-in-up" style="animation-delay:0.6s">
           <router-link to="/products" class="btn-primary">Explore Products</router-link>
-          <router-link to="/about" class="btn-ghost">Learn More →</router-link>
+          <router-link to="/quote" class="btn-ghost">Get a quote</router-link>
         </div>
       </div>
  
