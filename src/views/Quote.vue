@@ -405,19 +405,15 @@ const estimate = computed(() => {
   if (currentStep.value < 3 || !system.peakPower) return { label: '', solarLabel: '' }
  
   const peak = system.peakPower
-  const band =
-    pricing.peakPowerBands.find(b => peak >= b.minKw && peak < b.maxKw) ??
-    pricing.peakPowerBands[pricing.peakPowerBands.length - 1]
+  const lastBand  = pricing.peakPowerBands[pricing.peakPowerBands.length - 1]!
+  const lastHAdj  = pricing.hoursAdjustments[pricing.hoursAdjustments.length - 1]!
+  const lastLfAdj = pricing.loadFactorAdjustments[pricing.loadFactorAdjustments.length - 1]!
  
+  const band  = pricing.peakPowerBands.find(b => peak >= b.minKw && peak < b.maxKw) ?? lastBand
   const hours = system.hoursPerDay ?? 8
-  const hAdj =
-    pricing.hoursAdjustments.find(h => hours <= h.maxHours) ??
-    pricing.hoursAdjustments[pricing.hoursAdjustments.length - 1]
- 
+  const hAdj  = pricing.hoursAdjustments.find(h => hours <= h.maxHours) ?? lastHAdj
   const ratio = (system.normalLoad ?? 0) / peak
-  const lfAdj =
-    pricing.loadFactorAdjustments.find(l => ratio <= l.maxRatio) ??
-    pricing.loadFactorAdjustments[pricing.loadFactorAdjustments.length - 1]
+  const lfAdj = pricing.loadFactorAdjustments.find(l => ratio <= l.maxRatio) ?? lastLfAdj
  
   let minTotal = band.rangeMin * hAdj.multiplierMin * lfAdj.multiplierMin
   let maxTotal = band.rangeMax * hAdj.multiplierMax * lfAdj.multiplierMax
