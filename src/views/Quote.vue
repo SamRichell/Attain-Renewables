@@ -1,24 +1,24 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-gray-50 to-green-50/30">
  
-    <!-- Page header -->
+    <!-- Hero -->
     <div class="bg-gradient-to-br from-green-900 to-emerald-800 text-white py-16">
       <div class="container mx-auto px-6 text-center">
         <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-5 py-2 mb-6 text-sm font-medium">
-          <span class="w-2 h-2 bg-emerald-400 rounded-full"></span>
+          <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
           Free, no-obligation estimate
         </div>
         <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Get Your Quote Estimate</h1>
         <p class="text-lg text-green-200 max-w-xl mx-auto">
-          Tell us what you need and we'll give you an instant rough hardware cost.
+          Tell us about your energy needs and receive an instant hardware cost estimate.
         </p>
       </div>
     </div>
  
     <div class="container mx-auto px-6 py-12 max-w-2xl">
  
-      <!-- Step progress indicator -->
-      <div v-if="emailSubmitted" class="flex items-center justify-center mb-10">
+      <!-- Step indicator -->
+      <div class="flex items-center justify-center mb-10">
         <div v-for="(label, i) in stepLabels" :key="label" class="flex items-center">
           <div class="flex flex-col items-center">
             <div
@@ -45,162 +45,177 @@
         </div>
       </div>
  
-      <!-- ══════════════════════════════════════════
-           STEP 0: Email gate
-      ══════════════════════════════════════════ -->
-      <div v-if="!emailSubmitted" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-10">
-        <div class="text-center mb-8">
-          <div class="text-5xl mb-4">📋</div>
-          <h2 class="text-2xl font-bold mb-2">Before we start...</h2>
-          <p class="text-gray-500">Enter your details and we'll display your estimate instantly.</p>
-        </div>
+      <!-- ── STEP 1: Contact Details ── -->
+      <div v-if="currentStep === 1" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-2xl font-bold mb-1">Your Contact Details</h2>
+        <p class="text-gray-500 mb-8">We'll use these to send you your estimate and follow up.</p>
  
         <div class="space-y-5">
+ 
+          <!-- Full name -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1.5">
-              Your name <span class="text-gray-400">(optional)</span>
+              Full Name <span class="text-red-400">*</span>
             </label>
             <input
-              v-model="form.name"
+              v-model="contact.name"
               type="text"
               placeholder="Jane Smith"
-              class="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+              class="w-full border rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+              :class="errors.name ? 'border-red-300 bg-red-50' : 'border-gray-200'"
             />
+            <p v-if="errors.name" class="text-red-500 text-xs mt-1.5">{{ errors.name }}</p>
           </div>
  
+          <!-- Phone + country code -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1.5">
-              Email address <span class="text-red-400">*</span>
+              Phone Number <span class="text-red-400">*</span>
+            </label>
+            <div class="flex gap-2">
+              <select
+                v-model="contact.countryCode"
+                class="border border-gray-200 rounded-xl px-3 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white text-sm"
+                style="min-width: 120px; max-width: 130px;"
+              >
+                <option v-for="c in countryCodes" :key="c.code" :value="c.code">
+                  {{ c.flag }} {{ c.code }}
+                </option>
+              </select>
+              <input
+                v-model="contact.phone"
+                type="tel"
+                placeholder="7700 900000"
+                class="flex-1 border rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                :class="errors.phone ? 'border-red-300 bg-red-50' : 'border-gray-200'"
+              />
+            </div>
+            <p v-if="errors.phone" class="text-red-500 text-xs mt-1.5">{{ errors.phone }}</p>
+          </div>
+ 
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+              Email Address <span class="text-red-400">*</span>
             </label>
             <input
-              v-model="form.email"
+              v-model="contact.email"
               type="email"
               placeholder="jane@example.com"
               class="w-full border rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-              :class="emailError ? 'border-red-300 bg-red-50' : 'border-gray-200'"
-              @keyup.enter="submitEmail"
+              :class="errors.email ? 'border-red-300 bg-red-50' : 'border-gray-200'"
+              @keyup.enter="nextStep"
             />
-            <p v-if="emailError" class="text-red-500 text-xs mt-1.5">{{ emailError }}</p>
+            <p v-if="errors.email" class="text-red-500 text-xs mt-1.5">{{ errors.email }}</p>
           </div>
  
-          <button
-            @click="submitEmail"
-            class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-green-700 active:scale-[0.99] transition-all duration-150 shadow-md shadow-green-200"
-          >
-            Get My Estimate →
-          </button>
- 
-          <p class="text-center text-xs text-gray-400">
-            We'll only use your email to send you this estimate and occasional product updates.
-          </p>
-        </div>
-      </div>
- 
-      <!-- ══════════════════════════════════════════
-           STEP 1: Choose product type
-      ══════════════════════════════════════════ -->
-      <div v-else-if="currentStep === 1" class="space-y-5">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-          <h2 class="text-2xl font-bold mb-2">What are you interested in?</h2>
-          <p class="text-gray-500 mb-8">Select the type of equipment you'd like a rough cost for.</p>
- 
-          <div class="grid grid-cols-2 gap-4">
-            <button
-              @click="selectProductType('Solar Panels')"
-              class="relative p-6 rounded-2xl border-2 text-left transition-all duration-200"
-              :class="form.quoteType === 'Solar Panels'
-                ? 'border-green-500 bg-green-50'
-                : 'border-gray-100 hover:border-green-200 hover:bg-gray-50'"
-            >
-              <div class="text-5xl mb-4">☀️</div>
-              <h3 class="font-bold text-lg mb-1">Solar Panels</h3>
-              <p class="text-sm text-gray-500 leading-relaxed">Monocrystalline &amp; bifacial panels for rooftops and ground arrays.</p>
-              <div
-                v-if="form.quoteType === 'Solar Panels'"
-                class="absolute top-3 right-3 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold"
-              >✓</div>
-            </button>
- 
-            <button
-              @click="selectProductType('Wind Turbines')"
-              class="relative p-6 rounded-2xl border-2 text-left transition-all duration-200"
-              :class="form.quoteType === 'Wind Turbines'
-                ? 'border-green-500 bg-green-50'
-                : 'border-gray-100 hover:border-green-200 hover:bg-gray-50'"
-            >
-              <div class="text-5xl mb-4">💨</div>
-              <h3 class="font-bold text-lg mb-1">Wind Turbines</h3>
-              <p class="text-sm text-gray-500 leading-relaxed">Vertical axis (urban) and horizontal axis (commercial) units.</p>
-              <div
-                v-if="form.quoteType === 'Wind Turbines'"
-                class="absolute top-3 right-3 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold"
-              >✓</div>
-            </button>
-          </div>
-        </div>
- 
-        <div class="flex justify-between">
-          <button @click="emailSubmitted = false" class="text-gray-400 hover:text-gray-600 font-medium transition">← Back</button>
           <button
             @click="nextStep"
-            :disabled="!form.quoteType"
-            class="bg-green-600 text-white px-8 py-3 rounded-xl font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-green-700 transition"
+            class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-green-700 active:scale-[0.99] transition-all duration-150 shadow-md shadow-green-200"
           >
             Continue →
           </button>
         </div>
       </div>
  
-      <!-- ══════════════════════════════════════════
-           STEP 2: Configuration — Solar
-      ══════════════════════════════════════════ -->
-      <div v-else-if="currentStep === 2 && form.quoteType === 'Solar Panels'" class="space-y-5">
+      <!-- ── STEP 2: System Requirements ── -->
+      <div v-else-if="currentStep === 2" class="space-y-5">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-          <h2 class="text-2xl font-bold mb-2">Configure your solar array</h2>
-          <p class="text-gray-500 mb-8">Adjust the options below to match your project.</p>
+          <h2 class="text-2xl font-bold mb-1">System Requirements</h2>
+          <p class="text-gray-500 mb-8">Help us understand your energy needs.</p>
  
-          <div class="mb-8">
-            <label class="block text-sm font-semibold text-gray-700 mb-3">Panel type</label>
-            <div class="grid grid-cols-1 gap-3">
-              <label
-                v-for="panel in solarPanelOptions"
-                :key="panel.id"
-                class="flex items-start gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200"
-                :class="solarConfig.panelType === panel.id
-                  ? 'border-green-500 bg-green-50'
-                  : 'border-gray-100 hover:border-gray-200'"
-              >
-                <input type="radio" v-model="solarConfig.panelType" :value="panel.id" class="mt-0.5 accent-green-600" />
-                <div class="flex-1">
-                  <div class="flex justify-between items-start">
-                    <span class="font-semibold text-gray-800">{{ panel.name }}</span>
-                    <span class="text-green-700 font-bold text-sm">€{{ panel.priceEach.toLocaleString() }}/panel</span>
-                  </div>
-                  <p class="text-sm text-gray-500 mt-0.5">{{ panel.description }}</p>
-                </div>
+          <div class="space-y-6">
+ 
+            <!-- Peak power -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                Peak Power Required (kW) <span class="text-red-400">*</span>
               </label>
+              <input
+                v-model.number="system.peakPower"
+                type="number" min="0.1" step="0.1" placeholder="e.g. 10"
+                class="w-full border rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                :class="errors.peakPower ? 'border-red-300 bg-red-50' : 'border-gray-200'"
+              />
+              <p class="text-xs text-gray-400 mt-1">Maximum power demand at any one time</p>
+              <p v-if="errors.peakPower" class="text-red-500 text-xs mt-1">{{ errors.peakPower }}</p>
             </div>
-          </div>
  
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <label class="text-sm font-semibold text-gray-700">Number of panels</label>
-              <span class="text-2xl font-black text-green-600">{{ solarConfig.quantity }}</span>
+            <!-- Normal load -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                Normal Load (kW) <span class="text-red-400">*</span>
+              </label>
+              <input
+                v-model.number="system.normalLoad"
+                type="number" min="0.1" step="0.1" placeholder="e.g. 5"
+                class="w-full border rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                :class="errors.normalLoad ? 'border-red-300 bg-red-50' : 'border-gray-200'"
+              />
+              <p class="text-xs text-gray-400 mt-1">Typical continuous power consumption (must be ≤ peak power)</p>
+              <p v-if="errors.normalLoad" class="text-red-500 text-xs mt-1">{{ errors.normalLoad }}</p>
             </div>
-            <input
-              v-model.number="solarConfig.quantity"
-              type="range" min="1" max="50" step="1"
-              class="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-green-600"
-            />
-            <div class="flex justify-between text-xs text-gray-400 mt-1">
-              <span>1 panel</span><span>50 panels</span>
+ 
+            <!-- Hours per day -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                Daily Hours of Operation (h) <span class="text-red-400">*</span>
+              </label>
+              <input
+                v-model.number="system.hoursPerDay"
+                type="number" min="1" max="24" step="1" placeholder="e.g. 8"
+                class="w-full border rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                :class="errors.hoursPerDay ? 'border-red-300 bg-red-50' : 'border-gray-200'"
+              />
+              <p class="text-xs text-gray-400 mt-1">How many hours per day will the system operate? (1–24)</p>
+              <p v-if="errors.hoursPerDay" class="text-red-500 text-xs mt-1">{{ errors.hoursPerDay }}</p>
             </div>
-            <p class="text-sm text-gray-500 mt-3">
-              {{ solarConfig.quantity }} × {{ selectedSolarPanel?.power }}W =
-              <strong class="text-gray-800">
-                {{ (solarConfig.quantity * (selectedSolarPanel?.power ?? 0) / 1000).toFixed(1) }} kW
-              </strong> peak output
-            </p>
+ 
+            <!-- Solar yes/no -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-3">
+                Include Solar Generation? <span class="text-red-400">*</span>
+              </label>
+              <div class="grid grid-cols-2 gap-3">
+                <button
+                  @click="system.hasSolar = 'yes'"
+                  class="relative p-5 rounded-xl border-2 text-left transition-all duration-200"
+                  :class="system.hasSolar === 'yes' ? 'border-green-500 bg-green-50' : 'border-gray-100 hover:border-green-200 hover:bg-gray-50'"
+                >
+                  <div class="text-3xl mb-2">☀️</div>
+                  <div class="font-semibold text-gray-800">Yes</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Include solar panels</div>
+                  <div v-if="system.hasSolar === 'yes'" class="absolute top-2.5 right-2.5 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">✓</div>
+                </button>
+                <button
+                  @click="system.hasSolar = 'no'; system.solarKwp = null"
+                  class="relative p-5 rounded-xl border-2 text-left transition-all duration-200"
+                  :class="system.hasSolar === 'no' ? 'border-green-500 bg-green-50' : 'border-gray-100 hover:border-green-200 hover:bg-gray-50'"
+                >
+                  <div class="text-3xl mb-2">🔋</div>
+                  <div class="font-semibold text-gray-800">No</div>
+                  <div class="text-xs text-gray-500 mt-0.5">Storage / grid only</div>
+                  <div v-if="system.hasSolar === 'no'" class="absolute top-2.5 right-2.5 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">✓</div>
+                </button>
+              </div>
+              <p v-if="errors.hasSolar" class="text-red-500 text-xs mt-1.5">{{ errors.hasSolar }}</p>
+            </div>
+ 
+            <!-- Solar kWp (conditional) -->
+            <div v-if="system.hasSolar === 'yes'">
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                Solar Array Size (kWp) <span class="text-red-400">*</span>
+              </label>
+              <input
+                v-model.number="system.solarKwp"
+                type="number" min="0.1" step="0.1" placeholder="e.g. 10"
+                class="w-full border rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                :class="errors.solarKwp ? 'border-red-300 bg-red-50' : 'border-gray-200'"
+              />
+              <p class="text-xs text-gray-400 mt-1">Peak output capacity of your solar array</p>
+              <p v-if="errors.solarKwp" class="text-red-500 text-xs mt-1">{{ errors.solarKwp }}</p>
+            </div>
+ 
           </div>
         </div>
  
@@ -212,122 +227,69 @@
         </div>
       </div>
  
-      <!-- ══════════════════════════════════════════
-           STEP 2: Configuration — Wind
-      ══════════════════════════════════════════ -->
-      <div v-else-if="currentStep === 2 && form.quoteType === 'Wind Turbines'" class="space-y-5">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-          <h2 class="text-2xl font-bold mb-2">Configure your wind installation</h2>
-          <p class="text-gray-500 mb-8">Select the turbine type that suits your site and wind conditions.</p>
- 
-          <div class="mb-8">
-            <label class="block text-sm font-semibold text-gray-700 mb-3">Turbine type</label>
-            <div class="grid grid-cols-1 gap-3">
-              <label
-                v-for="turbine in windTurbineOptions"
-                :key="turbine.id"
-                class="flex items-start gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200"
-                :class="windConfig.turbineType === turbine.id
-                  ? 'border-green-500 bg-green-50'
-                  : 'border-gray-100 hover:border-gray-200'"
-              >
-                <input type="radio" v-model="windConfig.turbineType" :value="turbine.id" class="mt-0.5 accent-green-600" />
-                <div class="flex-1">
-                  <div class="flex justify-between items-start">
-                    <span class="font-semibold text-gray-800">{{ turbine.name }}</span>
-                    <span class="text-green-700 font-bold text-sm">€{{ turbine.priceEach.toLocaleString() }}/unit</span>
-                  </div>
-                  <p class="text-sm text-gray-500 mt-0.5">{{ turbine.description }}</p>
-                </div>
-              </label>
-            </div>
-          </div>
- 
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <label class="text-sm font-semibold text-gray-700">Number of turbines</label>
-              <span class="text-2xl font-black text-green-600">{{ windConfig.quantity }}</span>
-            </div>
-            <input
-              v-model.number="windConfig.quantity"
-              type="range" min="1" max="10" step="1"
-              class="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-green-600"
-            />
-            <div class="flex justify-between text-xs text-gray-400 mt-1">
-              <span>1 turbine</span><span>10 turbines</span>
-            </div>
-            <p class="text-sm text-gray-500 mt-3">
-              {{ windConfig.quantity }} × {{ selectedTurbine?.power }} =
-              <strong class="text-gray-800">
-                {{ windConfig.quantity * (selectedTurbine?.powerKw ?? 0) }} kW
-              </strong> rated output
-            </p>
-          </div>
-        </div>
- 
-        <div class="flex justify-between">
-          <button @click="currentStep--" class="text-gray-400 hover:text-gray-600 font-medium transition">← Back</button>
-          <button @click="nextStep" class="bg-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-700 transition">
-            See Estimate →
-          </button>
-        </div>
-      </div>
- 
-      <!-- ══════════════════════════════════════════
-           STEP 3: Results
-      ══════════════════════════════════════════ -->
+      <!-- ── STEP 3: Results ── -->
       <div v-else-if="currentStep === 3" class="space-y-6">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+ 
           <div class="text-center mb-8">
             <div class="text-5xl mb-3">🎉</div>
             <h2 class="text-2xl font-bold mb-1">Your Hardware Estimate</h2>
-            <p class="text-gray-500 text-sm">Based on {{ form.quoteType }} — hardware cost only</p>
+            <p class="text-gray-500 text-sm">Prepared for {{ contact.name }} · {{ contact.countryCode }} {{ contact.phone }}</p>
           </div>
  
+          <!-- Estimate breakdown -->
           <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100 p-6 mb-6">
             <div class="space-y-3 mb-5">
-              <div v-for="row in estimate.rows" :key="row.label" class="flex justify-between text-sm">
-                <span class="text-gray-600">{{ row.label }}</span>
-                <span class="font-semibold text-gray-800">{{ row.value }}</span>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Peak Power</span>
+                <span class="font-semibold text-gray-800">{{ system.peakPower }} kW</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Normal Load</span>
+                <span class="font-semibold text-gray-800">{{ system.normalLoad }} kW</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Daily Operation</span>
+                <span class="font-semibold text-gray-800">{{ system.hoursPerDay }} h/day</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">System Type</span>
+                <span class="font-semibold text-gray-800">{{ system.hasSolar === 'yes' ? 'Solar + Storage' : 'Storage / Grid Only' }}</span>
+              </div>
+              <div v-if="system.hasSolar === 'yes'" class="flex justify-between text-sm">
+                <span class="text-gray-600">Solar Array</span>
+                <span class="font-semibold text-gray-800">{{ system.solarKwp }} kWp</span>
+              </div>
+              <div v-if="system.hasSolar === 'yes'" class="flex justify-between text-sm border-t border-green-100 pt-3">
+                <span class="text-gray-500 italic text-xs">Solar hardware component</span>
+                <span class="text-gray-600 text-xs">{{ estimate.solarLabel }}</span>
               </div>
             </div>
+ 
             <div class="border-t-2 border-green-200 pt-4 flex justify-between items-center">
               <span class="text-lg font-bold text-green-900">Estimated Hardware Total</span>
-              <span class="text-2xl font-black text-green-700">{{ estimate.total }}</span>
+              <span class="text-2xl font-black text-green-700">{{ estimate.label }}</span>
             </div>
           </div>
  
+          <!-- Disclaimer -->
           <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
             <p class="text-sm text-amber-800 leading-relaxed">
-              ⚠️ <strong>Hardware cost only.</strong> This estimate does not include installation,
-              mounting hardware, wiring, inverter costs (for solar), or planning permission fees.
-              Installation typically adds 30–60% to hardware cost depending on site complexity.
+              ⚠️ <strong>Hardware cost only.</strong> {{ pricing.disclaimer }}
             </p>
           </div>
  
-          <!--
-            EMAIL BUTTON — PLACEHOLDER
-            When the AWS backend is live, replace the button below with a call to
-            api.leads.submit() from src/services/api.ts. The full implementation
-            is documented in the API version of this file.
-          -->
-          <div v-if="!emailSent" class="space-y-3">
-            <button
-              @click="emailEstimatePlaceholder"
-              :disabled="emailSending"
-              class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-green-700 disabled:opacity-60 transition-all duration-150 shadow-md shadow-green-200"
-            >
-              {{ emailSending ? 'Sending...' : `📧 Email this estimate to ${form.email}` }}
-            </button>
-            <p v-if="emailError" class="text-red-500 text-sm text-center">{{ emailError }}</p>
-          </div>
+          <!-- Email placeholder -->
+          <button
+            disabled
+            class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold text-lg transition-all duration-150 shadow-md shadow-green-200 opacity-60 cursor-not-allowed"
+          >
+            📧 Email this estimate to {{ contact.email }} <span class="text-sm font-normal">(coming soon)</span>
+          </button>
  
-          <div v-else class="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-            <p class="text-green-800 font-semibold">✅ Estimate sent to {{ form.email }}</p>
-            <p class="text-green-700 text-sm mt-1">Check your inbox — our team will be in touch shortly.</p>
-          </div>
         </div>
  
+        <!-- Quick links -->
         <div class="grid grid-cols-2 gap-4">
           <router-link to="/products"
             class="block bg-white rounded-xl border border-gray-100 p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
@@ -353,168 +315,139 @@
 </template>
  
 <script setup lang="ts">
-import { ref, computed, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import pricing from '../data/pricingBands.json'
  
-// ─── Step state ───────────────────────────────────────────────────────────────
-const stepLabels     = ['Product Type', 'Configuration', 'Your Estimate']
-const currentStep    = ref(1)
-const emailSubmitted = ref(false)
+// ── Steps ──────────────────────────────────────────────────────────────────
+const stepLabels = ['Contact Details', 'System Requirements', 'Your Estimate']
+const currentStep = ref(1)
  
-// ─── Form state ───────────────────────────────────────────────────────────────
-const form = reactive({
-  name:      '',
-  email:     '',
-  quoteType: '' as 'Solar Panels' | 'Wind Turbines' | '',
-})
- 
-// ─── Single error ref covering both the email gate and the send action ────────
-//
-// THE BUG EXPLAINED:
-//   The previous version declared `const emailError = ref('')` twice in the
-//   same <script setup> block — once for gate validation and once (labelled
-//   as a "re-export alias") for the send error. In JavaScript/TypeScript,
-//   `const` is block-scoped: you cannot declare the same name twice in the
-//   same block. This is identical to writing:
-//
-//     const x = 1
-//     const x = 2  // SyntaxError: Identifier 'x' has already been declared
-//
-//   Vue's <script setup> compiles to a single function body, so both
-//   declarations end up in the same block scope — hence the error.
-//
-// THE FIX:
-//   One ref, one name. We use `emailError` for both purposes:
-//     - Set it during submitEmail() if the format is invalid (gate)
-//     - Set it during emailEstimatePlaceholder() if sending fails (step 3)
-//   We clear it at the start of each action so stale messages don't persist.
-const emailError = ref('')
- 
-// ─── Email send state (step 3 only) ──────────────────────────────────────────
-const emailSending = ref(false)
-const emailSent    = ref(false)
- 
-// ─── Product option definitions ───────────────────────────────────────────────
-const solarPanelOptions = [
-  {
-    id:          'mono400',
-    name:        'Monocrystalline 400W',
-    description: 'High-efficiency panel. Ideal for residential rooftops with limited space.',
-    priceEach:   180,
-    power:       400,
-  },
-  {
-    id:          'bifacial550',
-    name:        'Bifacial 550W',
-    description: 'Generates power from both faces. Best for ground mounts and flat roofs.',
-    priceEach:   250,
-    power:       550,
-  },
+// ── Country codes ──────────────────────────────────────────────────────────
+const countryCodes = [
+  { code: '+1',   flag: '🇺🇸' }, { code: '+7',   flag: '🇷🇺' },
+  { code: '+20',  flag: '🇪🇬' }, { code: '+27',  flag: '🇿🇦' },
+  { code: '+30',  flag: '🇬🇷' }, { code: '+31',  flag: '🇳🇱' },
+  { code: '+32',  flag: '🇧🇪' }, { code: '+33',  flag: '🇫🇷' },
+  { code: '+34',  flag: '🇪🇸' }, { code: '+39',  flag: '🇮🇹' },
+  { code: '+40',  flag: '🇷🇴' }, { code: '+41',  flag: '🇨🇭' },
+  { code: '+43',  flag: '🇦🇹' }, { code: '+44',  flag: '🇬🇧' },
+  { code: '+45',  flag: '🇩🇰' }, { code: '+46',  flag: '🇸🇪' },
+  { code: '+47',  flag: '🇳🇴' }, { code: '+48',  flag: '🇵🇱' },
+  { code: '+49',  flag: '🇩🇪' }, { code: '+52',  flag: '🇲🇽' },
+  { code: '+55',  flag: '🇧🇷' }, { code: '+61',  flag: '🇦🇺' },
+  { code: '+63',  flag: '🇵🇭' }, { code: '+64',  flag: '🇳🇿' },
+  { code: '+65',  flag: '🇸🇬' }, { code: '+81',  flag: '🇯🇵' },
+  { code: '+82',  flag: '🇰🇷' }, { code: '+86',  flag: '🇨🇳' },
+  { code: '+90',  flag: '🇹🇷' }, { code: '+91',  flag: '🇮🇳' },
+  { code: '+92',  flag: '🇵🇰' }, { code: '+212', flag: '🇲🇦' },
+  { code: '+234', flag: '🇳🇬' }, { code: '+254', flag: '🇰🇪' },
+  { code: '+351', flag: '🇵🇹' }, { code: '+353', flag: '🇮🇪' },
+  { code: '+380', flag: '🇺🇦' }, { code: '+420', flag: '🇨🇿' },
+  { code: '+971', flag: '🇦🇪' }, { code: '+972', flag: '🇮🇱' },
 ]
  
-const windTurbineOptions = [
-  {
-    id:          'vawt5kw',
-    name:        'Vertical Axis 5kW (Urban)',
-    description: 'Compact, quiet, handles turbulent urban wind. Suitable for buildings and small sites.',
-    priceEach:   4200,
-    power:       '5 kW',
-    powerKw:     5,
-  },
-  {
-    id:          'hawt15kw',
-    name:        'Horizontal Axis 15kW (Commercial)',
-    description: 'Heavy-duty for farms, rural sites, and industrial premises with good open exposure.',
-    priceEach:   12800,
-    power:       '15 kW',
-    powerKw:     15,
-  },
-]
- 
-// ─── Configuration state ──────────────────────────────────────────────────────
-const solarConfig = reactive({ panelType: 'mono400',  quantity: 8 })
-const windConfig  = reactive({ turbineType: 'vawt5kw', quantity: 1 })
- 
-// ─── Derived values ───────────────────────────────────────────────────────────
-const selectedSolarPanel = computed(() =>
-  solarPanelOptions.find(p => p.id === solarConfig.panelType)
-)
- 
-const selectedTurbine = computed(() =>
-  windTurbineOptions.find(t => t.id === windConfig.turbineType)
-)
- 
-const estimate = computed(() => {
-  if (form.quoteType === 'Solar Panels') {
-    const panel    = selectedSolarPanel.value!
-    const hardware = panel.priceEach * solarConfig.quantity
-    return {
-      total: `€${hardware.toLocaleString()}`,
-      rows: [
-        { label: 'Panel type',        value: panel.name },
-        { label: 'Quantity',          value: `${solarConfig.quantity} panels` },
-        { label: 'Price per panel',   value: `€${panel.priceEach}` },
-        { label: 'Peak output',       value: `${(solarConfig.quantity * panel.power / 1000).toFixed(1)} kW` },
-        { label: 'Hardware subtotal', value: `€${hardware.toLocaleString()}` },
-      ],
-    }
-  } else {
-    const turbine  = selectedTurbine.value!
-    const hardware = turbine.priceEach * windConfig.quantity
-    return {
-      total: `€${hardware.toLocaleString()}`,
-      rows: [
-        { label: 'Turbine type',      value: turbine.name },
-        { label: 'Quantity',          value: `${windConfig.quantity} turbine${windConfig.quantity > 1 ? 's' : ''}` },
-        { label: 'Price per turbine', value: `€${turbine.priceEach.toLocaleString()}` },
-        { label: 'Rated output',      value: `${windConfig.quantity * turbine.powerKw} kW total` },
-        { label: 'Hardware subtotal', value: `€${hardware.toLocaleString()}` },
-      ],
-    }
-  }
+// ── Form state ─────────────────────────────────────────────────────────────
+const contact = reactive({ name: '', countryCode: '+44', phone: '', email: '' })
+const system  = reactive({
+  peakPower:  null as number | null,
+  normalLoad: null as number | null,
+  hoursPerDay: null as number | null,
+  hasSolar:   '' as 'yes' | 'no' | '',
+  solarKwp:   null as number | null,
 })
+const errors = reactive<Record<string, string>>({})
  
-// ─── Actions ──────────────────────────────────────────────────────────────────
+// ── Validation ─────────────────────────────────────────────────────────────
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const PHONE_RE = /^\d{7,15}$/
  
-function submitEmail() {
-  emailError.value = ''  // clear any previous error before re-validating
-  if (!form.email || !EMAIL_RE.test(form.email)) {
-    emailError.value = 'Please enter a valid email address.'
-    return
-  }
-  emailSubmitted.value = true
+function clearErrors() {
+  Object.keys(errors).forEach(k => delete errors[k])
 }
  
-function selectProductType(type: 'Solar Panels' | 'Wind Turbines') {
-  form.quoteType = type
+function validateStep1(): boolean {
+  clearErrors()
+  if (!contact.name.trim() || contact.name.trim().length < 2)
+    errors.name = 'Please enter your full name (at least 2 characters).'
+  const cleanPhone = contact.phone.replace(/[\s\-().]/g, '')
+  if (!cleanPhone || !PHONE_RE.test(cleanPhone))
+    errors.phone = 'Please enter a valid phone number (7–15 digits, no country code).'
+  if (!contact.email || !EMAIL_RE.test(contact.email))
+    errors.email = 'Please enter a valid email address.'
+  return Object.keys(errors).length === 0
+}
+ 
+function validateStep2(): boolean {
+  clearErrors()
+  if (!system.peakPower || system.peakPower <= 0)
+    errors.peakPower = 'Please enter a valid peak power greater than 0.'
+  if (!system.normalLoad || system.normalLoad <= 0)
+    errors.normalLoad = 'Please enter a valid normal load greater than 0.'
+  else if (system.peakPower && system.normalLoad > system.peakPower)
+    errors.normalLoad = 'Normal load cannot exceed peak power.'
+  if (!system.hoursPerDay || system.hoursPerDay < 1 || system.hoursPerDay > 24)
+    errors.hoursPerDay = 'Please enter a value between 1 and 24 hours.'
+  if (!system.hasSolar)
+    errors.hasSolar = 'Please select an option.'
+  if (system.hasSolar === 'yes' && (!system.solarKwp || system.solarKwp <= 0))
+    errors.solarKwp = 'Please enter the solar array size in kWp.'
+  return Object.keys(errors).length === 0
 }
  
 function nextStep() {
-  if (currentStep.value < 3) currentStep.value++
+  if (currentStep.value === 1 && !validateStep1()) return
+  if (currentStep.value === 2 && !validateStep2()) return
+  currentStep.value++
 }
  
-// Placeholder — replace with api.leads.submit() once AWS backend is deployed.
-// At that point, also set emailSent.value = true on success and populate
-// emailError.value on failure instead of using alert().
-function emailEstimatePlaceholder() {
-  emailError.value = ''  // clear any stale send error
-  alert(
-    `[DEV MODE — no API yet]\n\n` +
-    `When the AWS backend is live this button will:\n` +
-    `  1. POST the estimate data to /leads\n` +
-    `  2. Lambda saves the lead to DynamoDB\n` +
-    `  3. SES sends a confirmation email to ${form.email}`
-  )
-}
+// ── Estimate calculation ───────────────────────────────────────────────────
+const estimate = computed(() => {
+  if (currentStep.value < 3 || !system.peakPower) return { label: '', solarLabel: '' }
  
+  const peak = system.peakPower
+  const band =
+    pricing.peakPowerBands.find(b => peak >= b.minKw && peak < b.maxKw) ??
+    pricing.peakPowerBands[pricing.peakPowerBands.length - 1]
+ 
+  const hours = system.hoursPerDay ?? 8
+  const hAdj =
+    pricing.hoursAdjustments.find(h => hours <= h.maxHours) ??
+    pricing.hoursAdjustments[pricing.hoursAdjustments.length - 1]
+ 
+  const ratio = (system.normalLoad ?? 0) / peak
+  const lfAdj =
+    pricing.loadFactorAdjustments.find(l => ratio <= l.maxRatio) ??
+    pricing.loadFactorAdjustments[pricing.loadFactorAdjustments.length - 1]
+ 
+  let minTotal = band.rangeMin * hAdj.multiplierMin * lfAdj.multiplierMin
+  let maxTotal = band.rangeMax * hAdj.multiplierMax * lfAdj.multiplierMax
+ 
+  let solarMin = 0, solarMax = 0
+  if (system.hasSolar === 'yes' && system.solarKwp) {
+    solarMin = system.solarKwp * pricing.solarAdder.perKwpMin
+    solarMax = system.solarKwp * pricing.solarAdder.perKwpMax
+    minTotal += solarMin
+    maxTotal += solarMax
+  }
+ 
+  const fmt = (n: number) => `${pricing.currency}${Math.round(n).toLocaleString()}`
+  return {
+    label:      `${fmt(minTotal)} – ${fmt(maxTotal)}`,
+    solarLabel: system.hasSolar === 'yes' ? `${fmt(solarMin)} – ${fmt(solarMax)}` : '',
+  }
+})
+ 
+// ── Reset ──────────────────────────────────────────────────────────────────
 function startOver() {
-  form.quoteType       = ''
-  currentStep.value    = 1
-  emailSent.value      = false
-  emailError.value     = ''
-  solarConfig.quantity  = 8
-  solarConfig.panelType = 'mono400'
-  windConfig.quantity   = 1
-  windConfig.turbineType = 'vawt5kw'
+  currentStep.value  = 1
+  clearErrors()
+  contact.name       = ''
+  contact.phone      = ''
+  contact.email      = ''
+  system.peakPower   = null
+  system.normalLoad  = null
+  system.hoursPerDay = null
+  system.hasSolar    = ''
+  system.solarKwp    = null
 }
 </script>

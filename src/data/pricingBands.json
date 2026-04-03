@@ -1,0 +1,80 @@
+{
+  "currency": "€",
+  "peakPowerBands": [
+    {
+      "minKw": 0,
+      "maxKw": 5,
+      "rangeMin": 3000,
+      "rangeMax": 6000
+    },
+    {
+      "minKw": 5,
+      "maxKw": 15,
+      "rangeMin": 6000,
+      "rangeMax": 14000
+    },
+    {
+      "minKw": 15,
+      "maxKw": 30,
+      "rangeMin": 14000,
+      "rangeMax": 26000
+    },
+    {
+      "minKw": 30,
+      "maxKw": 50,
+      "rangeMin": 26000,
+      "rangeMax": 45000
+    },
+    {
+      "minKw": 50,
+      "maxKw": 100,
+      "rangeMin": 45000,
+      "rangeMax": 85000
+    },
+    {
+      "minKw": 100,
+      "maxKw": 999999,
+      "rangeMin": 85000,
+      "rangeMax": 180000
+    }
+  ],
+  "hoursAdjustments": [
+    {
+      "maxHours": 8,
+      "multiplierMin": 1,
+      "multiplierMax": 1
+    },
+    {
+      "maxHours": 16,
+      "multiplierMin": 1.15,
+      "multiplierMax": 1.2
+    },
+    {
+      "maxHours": 24,
+      "multiplierMin": 1.3,
+      "multiplierMax": 1.45
+    }
+  ],
+  "loadFactorAdjustments": [
+    {
+      "maxRatio": 0.4,
+      "multiplierMin": 0.9,
+      "multiplierMax": 0.95
+    },
+    {
+      "maxRatio": 0.7,
+      "multiplierMin": 1,
+      "multiplierMax": 1
+    },
+    {
+      "maxRatio": 1,
+      "multiplierMin": 1.05,
+      "multiplierMax": 1.1
+    }
+  ],
+  "solarAdder": {
+    "perKwpMin": 400,
+    "perKwpMax": 650
+  },
+  "disclaimer": "Hardware cost estimate only. Installation, civil works, grid connection, cabling, and planning permission fees are not included. Actual costs may vary following a full site survey."
+}
