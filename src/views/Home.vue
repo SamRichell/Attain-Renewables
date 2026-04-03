@@ -18,16 +18,16 @@
           🌿 Clean Energy Importers
         </div>
         <h1 class="hero-heading animate-fade-in-up" style="animation-delay:0.25s">
-          Powering the Future<br>
-          <span class="hero-accent">with Renewable Energy</span>
+          Saving Money for Businesses<br>
+          <span class="hero-accent">with Battery Systems</span>
         </h1>
         <p class="hero-sub animate-fade-in-up" style="animation-delay:0.45s">
-          Importing top‑quality solar panels, wind turbines, and battery storage
+          Supplying top‑quality battery energy storage systems, solar panels and wind turbines
           from trusted global manufacturers.
         </p>
         <div class="hero-actions animate-fade-in-up" style="animation-delay:0.6s">
           <router-link to="/products" class="btn-primary">Explore Products</router-link>
-          <router-link to="/quote" class="btn-ghost">Get a quote</router-link>
+          <router-link to="/quote" class="btn-primary">Get a quote</router-link>
         </div>
       </div>
  
@@ -116,7 +116,7 @@
             alt="Attain Renewables team or warehouse"
             class="mission-img"
           />
-          <div class="mission-img-badge">Est. 2020</div>
+          <div class="mission-img-badge">Est. 2022</div>
         </div>
       </div>
     </section>
