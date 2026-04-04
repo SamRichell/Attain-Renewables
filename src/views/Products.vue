@@ -23,16 +23,16 @@
       <div
         v-for="product in paginatedProducts"
         :key="product.id"
-        class="bg-white rounded-lg shadow-md overflow-hidden"
+        class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
       >
         <img :src="product.image" :alt="product.name" class="w-full h-48 object-cover">
-        <div class="p-6">
+        <div class="p-6 flex flex-col flex-1">
           <span class="text-xs font-semibold text-green-700 uppercase tracking-wide bg-green-50 px-2 py-1 rounded mb-3 inline-block">
             {{ product.category }}
           </span>
           <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
           <p class="text-gray-600 mb-4">{{ product.description }}</p>
-          <div class="flex justify-between items-center">
+          <div class="flex justify-between items-center mt-auto">
             <span class="text-green-700 font-bold text-lg">{{ product.price }}</span>
             <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Inquire</button>
           </div>
