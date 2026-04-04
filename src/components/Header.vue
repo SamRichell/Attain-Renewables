@@ -11,7 +11,7 @@
         class="text-2xl font-bold transition-colors duration-300"
         :class="isHome ? 'text-white' : 'text-green-700'"
       >
-        <img src="/logo.svg">
+        <img :src="isHome ? '/logoWhite.svg' : '/logo.svg'">
       </router-link>
       <div class="space-x-6">
         <router-link
