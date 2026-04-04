@@ -2,7 +2,7 @@
   <header
     class="transition-all duration-300"
     :class="isHome
-      ? 'fixed top-0 left-0 right-0 z-50 bg-transparent'
+      ? 'absolute top-0 left-0 right-0 z-50 bg-transparent'
       : 'bg-white shadow-md'"
   >
     <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -38,14 +38,14 @@
     </nav>
   </header>
 </template>
-
+ 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-
+ 
 const route  = useRoute()
 const isHome = computed(() => route.name === 'Home')
-
+ 
 const navLinks = [
   { to: '/',         label: 'Home'     },
   { to: '/products', label: 'Products' },
@@ -53,7 +53,7 @@ const navLinks = [
   { to: '/blog',     label: 'Blog'     },
 ]
 </script>
-
+ 
 <style>
 header img {
   height: 48px;
