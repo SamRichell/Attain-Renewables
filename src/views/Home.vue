@@ -3,10 +3,9 @@
  
     <!-- ─── HERO ─────────────────────────────────────────────── -->
     <section class="hero-section">
-      <!-- Background image placeholder – swap src with your Pexels/Unsplash URL -->
       <div class="hero-bg">
         <img
-          src="/SolarFarm.jpg"
+          src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SolarFarm.jpg"
           alt="Solar field background"
           class="hero-bg-img"
         />
@@ -31,7 +30,6 @@
         </div>
       </div>
  
-      <!-- Animated scroll indicator -->
       <div class="scroll-indicator animate-bounce-slow">
         <div class="scroll-dot"></div>
       </div>
@@ -40,7 +38,7 @@
     <!-- ─── STATS STRIP ────────────────────────────────────────── -->
     <section class="stats-strip">
       <div class="container stats-grid">
-        <div v-for="stat in stats" :key="stat.label" class="stat-item animate-count">
+        <div v-for="stat in stats" :key="stat.label" class="stat-item animate-fade-in-up">
           <span class="stat-number">{{ stat.value }}</span>
           <span class="stat-label">{{ stat.label }}</span>
         </div>
@@ -65,7 +63,6 @@
             <div class="feature-icon-wrap">
               <span class="feature-icon">{{ feature.icon }}</span>
             </div>
-            <!-- Image placeholder per feature -->
             <div class="feature-img-wrap">
               <img
                 :src="feature.image"
@@ -86,8 +83,8 @@
         <div
           v-for="(img, i) in showcaseImages"
           :key="i"
-          class="showcase-card"
-          :style="`animation-delay:${i * 0.15}s`"
+          class="showcase-card animate-fade-in-up"
+          :style="`animation-delay:${i * 0.1}s`"
         >
           <img :src="img.src" :alt="img.label" class="showcase-img" />
           <div class="showcase-label">{{ img.label }}</div>
@@ -109,10 +106,9 @@
           <router-link to="/about" class="btn-primary">About Us →</router-link>
         </div>
  
-        <!-- Mission image placeholder -->
         <div class="mission-img-wrap animate-fade-in-up" style="animation-delay:0.2s">
           <img
-            src="/Suzhou.jpg"
+            src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/Suzhou.jpg"
             alt="Attain Renewables team or warehouse"
             class="mission-img"
           />
@@ -125,7 +121,7 @@
     <section class="cta-section">
       <div class="cta-bg">
         <img
-          src="/WindFarm.jpg"
+          src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/WindFarm.jpg"
           alt="Wind farm"
           class="cta-bg-img"
         />
@@ -142,6 +138,49 @@
 </template>
  
 <script setup>
+import { onMounted, onUnmounted } from 'vue'
+ 
+// ── Scroll-triggered animations ────────────────────────────────────────────
+// Hero elements are in view immediately, so we mark them visible right away.
+// Everything else is observed and revealed as it enters the viewport.
+let observer = null
+ 
+onMounted(() => {
+  const els = Array.from(document.querySelectorAll('.animate-fade-in-up'))
+ 
+  // Hero children are already in the viewport on load — reveal instantly.
+  const heroSection = document.querySelector('.hero-section')
+  els.forEach((el) => {
+    if (heroSection && heroSection.contains(el)) {
+      el.classList.add('is-visible')
+    }
+  })
+ 
+  // All remaining elements are observed.
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          observer?.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.12 }
+  )
+ 
+  els.forEach((el) => {
+    if (!el.classList.contains('is-visible')) {
+      observer.observe(el)
+    }
+  })
+})
+ 
+onUnmounted(() => {
+  observer?.disconnect()
+})
+ 
+// ── Data ───────────────────────────────────────────────────────────────────
 const stats = [
   { value: '500+', label: 'Installations Supported' },
   { value: '12',   label: 'Global Partners'         },
@@ -154,7 +193,6 @@ const features = [
     icon: '🌞',
     title: 'Premium Solar Panels',
     desc: 'High‑efficiency monocrystalline panels from leading European and Asian manufacturers.',
-    // Replace with a real Pexels/Unsplash URL when ready
     image: '/SolarPanels.jpg',
   },
   {
@@ -177,7 +215,7 @@ const showcaseImages = [
   { src: '/Batteries.jpg',      label: 'Batteries'        },
   { src: '/EVChargers.png',     label: 'EV Chargers'      },
   { src: '/SiteLighting.png',   label: 'Site Lighting'    },
-  { src: '/SitePower.png',      label: 'Site Power'       }
+  { src: '/SitePower.png',      label: 'Site Power'       },
 ]
 </script>
  
@@ -186,28 +224,34 @@ const showcaseImages = [
 .home-page { overflow-x: hidden; }
 .container  { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
  
-/* ── Animations ────────────────────────────────────── */
+/* ── Scroll-triggered animation ─────────────────────── */
+/* Elements start invisible and motionless.              */
+/* The JS observer adds .is-visible to play the keyframe */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(32px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
+ 
+.animate-fade-in-up {
+  opacity: 0;
+  transform: translateY(32px);
+}
+ 
+.animate-fade-in-up.is-visible {
+  animation: fadeInUp 0.7s ease both;
+  /* Respect any inline animation-delay set on the element */
+}
+ 
+/* ── Other animations ───────────────────────────────── */
 @keyframes bounceSlow {
   0%, 100% { transform: translateY(0);   }
   50%       { transform: translateY(8px); }
-}
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-40px); }
-  to   { opacity: 1; transform: translateX(0);     }
 }
 @keyframes shimmer {
   0%   { background-position: -200% center; }
   100% { background-position:  200% center; }
 }
  
-.animate-fade-in-up  {
-  animation: fadeInUp 0.7s ease both;
-  opacity: 0; /* start hidden; animation fills forwards */
-}
 .animate-bounce-slow { animation: bounceSlow 2s ease-in-out infinite; }
  
 /* ── Hero ───────────────────────────────────────────── */
@@ -286,21 +330,6 @@ const showcaseImages = [
   background: #15803d;
   transform: translateY(-2px);
   box-shadow: 0 8px 28px rgba(22,163,74,0.45);
-}
-.btn-ghost {
-  display: inline-block;
-  color: white;
-  border: 1.5px solid rgba(255,255,255,0.45);
-  padding: 0.75rem 2rem;
-  border-radius: 999px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
-}
-.btn-ghost:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: white;
-  transform: translateY(-2px);
 }
  
 /* ── Scroll indicator ───────────────────────────────── */
@@ -436,7 +465,6 @@ const showcaseImages = [
   overflow: hidden;
   position: relative;
   scroll-snap-align: start;
-  animation: fadeInUp 0.6s ease both;
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
   transition: transform 0.3s;
 }
