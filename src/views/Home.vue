@@ -452,16 +452,21 @@ const showcaseImages = [
 }
 .showcase-track {
   display: flex;
+  flex-wrap: nowrap;
   gap: 1.5rem;
   overflow-x: auto;
+  overflow-y: hidden;
   padding: 0 1.5rem 1rem;
   scrollbar-width: thin;
   scrollbar-color: #86efac #f0fdf4;
   scroll-snap-type: x mandatory;
+  height: 240px;
 }
 .showcase-card {
+  height: 210px;
   flex: 0 0 320px;
   border-radius: 14px;
+  flex-shrink: 0;
   overflow: hidden;
   position: relative;
   scroll-snap-align: start;
@@ -469,7 +474,7 @@ const showcaseImages = [
   transition: transform 0.3s;
 }
 .showcase-card:hover { transform: scale(1.025); }
-.showcase-img { width: 100%; height: 210px; object-fit: cover; display: block; }
+.showcase-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .showcase-label {
   position: absolute;
   bottom: 0; left: 0; right: 0;
