@@ -3,7 +3,7 @@
     <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
       <!-- Logo -->
       <router-link to="/" class="shrink-0">
-        <img :src="logoSrc" class="h-12 w-auto block object-contain" alt="Logo" />
+        <img :src="logoSrc" class="h-12 xl:h-20 w-auto block object-contain" alt="Logo" />
       </router-link>
  
       <!-- Desktop nav -->
