@@ -14,11 +14,11 @@
  
       <div class="hero-content container">
         <div class="hero-badge animate-fade-in-up" style="animation-delay:0.1s">
-          🌿 Clean Energy Importers
+          Delivering Direct To Your Business
         </div>
         <h1 class="hero-heading animate-fade-in-up" style="animation-delay:0.25s">
-          Saving Money for Businesses<br>
-          <span class="hero-accent">with Battery Systems</span>
+          Battery Systems<br>
+          <span class="hero-accent">That Save Money<br>for Your Business</span>
         </h1>
         <p class="hero-sub animate-fade-in-up" style="animation-delay:0.45s">
           Supplying top‑quality battery energy storage systems, solar panels and wind turbines
@@ -26,7 +26,7 @@
         </p>
         <div class="hero-actions animate-fade-in-up" style="animation-delay:0.6s">
           <router-link to="/products" class="btn-primary">Explore Products</router-link>
-          <router-link to="/quote" class="btn-primary">Get a quote</router-link>
+          <router-link to="/quote" class="btn-primary">See how much you could save</router-link>
         </div>
       </div>
  
