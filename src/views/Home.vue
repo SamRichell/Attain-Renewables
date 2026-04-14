@@ -12,7 +12,7 @@
         <div class="hero-overlay"></div>
       </div>
  
-      <div class="hero-content container">
+      <div class="hero-content w-full max-w-screen-xl mx-auto px-6">
         <div class="hero-badge animate-fade-in-up" style="animation-delay:0.1s">
           Delivering Direct To Your Business
         </div>
@@ -37,9 +37,9 @@
  
     <!-- ─── STATS STRIP ────────────────────────────────────────── -->
     <section class="stats-strip">
-      <div class="container stats-grid">
+      <div class="w-full max-w-screen-xl mx-auto px-6 stats-grid">
         <div v-for="stat in stats" :key="stat.label" class="stat-item animate-fade-in-up">
-          <span class="stat-number">{{ stat.value }}</span>
+          <span class="stat-icon">{{ stat.icon }}</span>
           <span class="stat-label">{{ stat.label }}</span>
         </div>
       </div>
@@ -47,12 +47,13 @@
  
     <!-- ─── WHY CHOOSE US ──────────────────────────────────────── -->
     <section class="features-section">
-      <div class="container">
+      <div class="w-full max-w-screen-xl mx-auto px-6">
         <div class="section-header animate-fade-in-up">
           <p class="section-eyebrow">Why choose us</p>
           <h2 class="section-title">Built for the Energy Revolution</h2>
         </div>
  
+        <!-- Existing product cards -->
         <div class="features-grid">
           <div
             v-for="(feature, i) in features"
@@ -72,6 +73,22 @@
             </div>
             <h3 class="feature-title">{{ feature.title }}</h3>
             <p class="feature-desc">{{ feature.desc }}</p>
+          </div>
+        </div>
+ 
+        <!-- Value proposition strip -->
+        <div class="value-props-grid">
+          <div
+            v-for="(prop, i) in valueProps"
+            :key="prop.title"
+            class="value-prop-card animate-fade-in-up"
+            :style="`animation-delay:${0.08 * i}s`"
+          >
+            <span class="value-prop-icon">{{ prop.icon }}</span>
+            <div>
+              <p class="value-prop-title">{{ prop.title }}</p>
+              <p class="value-prop-desc">{{ prop.desc }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -94,7 +111,7 @@
  
     <!-- ─── MISSION ────────────────────────────────────────────── -->
     <section class="mission-section">
-      <div class="container mission-grid">
+      <div class="w-full max-w-screen-xl mx-auto px-6 mission-grid">
         <div class="mission-text animate-fade-in-up">
           <p class="section-eyebrow">Our mission</p>
           <h2 class="section-title">Accelerating Clean Energy Adoption</h2>
@@ -127,7 +144,7 @@
         />
         <div class="cta-overlay"></div>
       </div>
-      <div class="container cta-content animate-fade-in-up">
+      <div class="w-full max-w-screen-xl mx-auto px-6 cta-content animate-fade-in-up">
         <h2 class="cta-title">Ready to Make the Switch?</h2>
         <p class="cta-sub">Contact us today for a free consultation and tailored quote.</p>
         <router-link to="/about" class="btn-cta">Get in Touch</router-link>
@@ -141,14 +158,11 @@
 import { onMounted, onUnmounted } from 'vue'
  
 // ── Scroll-triggered animations ────────────────────────────────────────────
-// Hero elements are in view immediately, so we mark them visible right away.
-// Everything else is observed and revealed as it enters the viewport.
 let observer = null
  
 onMounted(() => {
   const els = Array.from(document.querySelectorAll('.animate-fade-in-up'))
  
-  // Hero children are already in the viewport on load — reveal instantly.
   const heroSection = document.querySelector('.hero-section')
   els.forEach((el) => {
     if (heroSection && heroSection.contains(el)) {
@@ -156,7 +170,6 @@ onMounted(() => {
     }
   })
  
-  // All remaining elements are observed.
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -182,30 +195,58 @@ onUnmounted(() => {
  
 // ── Data ───────────────────────────────────────────────────────────────────
 const stats = [
-  { value: '500+', label: 'Installations Supported' },
-  { value: '12',   label: 'Global Partners'         },
-  { value: '98%',  label: 'Customer Satisfaction'   },
-  { value: '5yr',  label: 'Average Product Warranty' },
+  { icon: '⛽', label: 'Reduce Diesel Consumption'          },
+  { icon: '⚡', label: 'Load Shift to Off-Peak Grid Charges' },
+  { icon: '☀️', label: 'Utilise Solar Energy'               },
+  { icon: '🔄', label: 'Hybrid Systems'                     },
 ]
  
 const features = [
   {
     icon: '🌞',
-    title: 'Premium Solar Panels',
-    desc: 'High‑efficiency monocrystalline panels from leading European and Asian manufacturers.',
+    title: 'Premium and Custom Solar Panels',
+    desc: 'CE/UKCA and MCS solar PV in standard or custom sizes delivered in bulk direct to you from China',
     image: '/SolarPanels.jpg',
   },
   {
     icon: '💨',
-    title: 'Advanced Wind Turbines',
-    desc: 'Reliable, low‑noise turbines suitable for residential and commercial installations.',
+    title: 'Mobile Batteries for Site Use',
+    desc: 'Rugged, all-in-one batteries for construction, recycling, quarry and mobile uses - typically 30-100kWh',
     image: '/WindTurbine.jpg',
   },
   {
     icon: '🔋',
-    title: 'Large‑Scale Batteries',
-    desc: 'Lithium‑ion storage systems that maximise energy independence and grid stability.',
+    title: 'All-in-one BESS for static',
+    desc: 'For general commercial and industrial uses where a fixed system isappropriate - typically 200-5000kWh',
     image: '/Batteries.jpg',
+  },
+]
+ 
+const valueProps = [
+  {
+    icon: '📞',
+    title: 'Accessible & Friendly',
+    desc: 'Real people, real advice. Give us a call and speak directly with our team.',
+  },
+  {
+    icon: '💰',
+    title: 'Cost Savings & ROI First',
+    desc: 'Every recommendation is driven by what delivers measurable returns for your business.',
+  },
+  {
+    icon: '🔓',
+    title: 'Manufacturer Independent',
+    desc: 'We are not tied to any single brand, so you always get the best-fit product for your needs.',
+  },
+  {
+    icon: '🏗️',
+    title: 'Built for Site Work',
+    desc: 'Rugged, field-ready products designed for the demands of construction and industrial sites.',
+  },
+  {
+    icon: '📊',
+    title: 'Modelling & Efficiency Assessments',
+    desc: 'We model your energy profile and assess system efficiency before you commit to a purchase.',
   },
 ]
  
@@ -222,11 +263,8 @@ const showcaseImages = [
 <style scoped>
 /* ── Base ───────────────────────────────────────────── */
 .home-page { overflow-x: hidden; }
-.container  { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
  
 /* ── Scroll-triggered animation ─────────────────────── */
-/* Elements start invisible and motionless.              */
-/* The JS observer adds .is-visible to play the keyframe */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(32px); }
   to   { opacity: 1; transform: translateY(0);    }
@@ -239,7 +277,6 @@ const showcaseImages = [
  
 .animate-fade-in-up.is-visible {
   animation: fadeInUp 0.7s ease both;
-  /* Respect any inline animation-delay set on the element */
 }
  
 /* ── Other animations ───────────────────────────────── */
@@ -288,7 +325,7 @@ const showcaseImages = [
   text-transform: uppercase;
   padding: 0.4rem 1rem;
   border-radius: 999px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.6rem;
 }
 .hero-heading {
   font-size: clamp(2.2rem, 5vw, 4rem);
@@ -357,28 +394,32 @@ const showcaseImages = [
 .stats-strip {
   background: #14532d;
   color: white;
-  padding: 2rem 0;
+  padding: 4rem 0;
 }
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2.5rem;
   text-align: center;
 }
-.stat-number {
-  display: block;
-  font-size: 2rem;
-  font-weight: 800;
-  color: #4ade80;
-  letter-spacing: -0.02em;
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.stat-icon {
+  font-size: 3.5rem;
+  line-height: 1;
 }
 .stat-label {
   display: block;
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #86efac;
-  margin-top: 0.2rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #d1fae5;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  max-width: 180px;
 }
  
 /* ── Section typography ─────────────────────────────── */
@@ -408,6 +449,7 @@ const showcaseImages = [
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
+  margin-bottom: 4rem;
 }
 .feature-card {
   background: white;
@@ -442,6 +484,46 @@ const showcaseImages = [
   color: #4b5563;
   line-height: 1.65;
   padding: 0 1.25rem 1.5rem;
+}
+ 
+/* ── Value proposition strip ────────────────────────── */
+.value-props-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  border-top: 2px solid #dcfce7;
+  padding-top: 3rem;
+}
+.value-prop-card {
+  display: grid;
+   gap: 1rem;
+  background: white;
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: 0 1px 8px rgba(0,80,40,0.06);
+  border: 1px solid #f0fdf4;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.value-prop-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,80,40,0.1);
+}
+.value-prop-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.1rem;
+}
+.value-prop-title {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: #14532d;
+  margin-bottom: 0.3rem;
+}
+.value-prop-desc {
+  font-size: 0.85rem;
+  color: #6b7280;
+  line-height: 1.55;
 }
  
 /* ── Showcase strip ─────────────────────────────────── */
