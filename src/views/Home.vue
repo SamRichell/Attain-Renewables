@@ -4,11 +4,19 @@
     <!-- ─── HERO ─────────────────────────────────────────────── -->
     <section class="hero-section">
       <div class="hero-bg">
-        <img
-          src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SolarFarm.jpg"
-          alt="Solar field background"
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
           class="hero-bg-img"
-        />
+          style="object-fit: cover;"
+        >
+          <source
+            src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/videos/hero-background.mp4"
+            type="video/mp4"
+          />
+        </video>
         <div class="hero-overlay"></div>
       </div>
  
