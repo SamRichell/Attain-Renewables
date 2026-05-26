@@ -13,7 +13,7 @@
           style="object-fit: cover;"
         >
           <source
-            src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/videos/hero-background.mp4"
+            src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/videos/hero-bakground2.mp4"
             type="video/mp4"
           />
         </video>
@@ -69,9 +69,7 @@
             class="feature-card animate-fade-in-up"
             :style="`animation-delay:${0.1 * i}s`"
           >
-            <div class="feature-icon-wrap">
-              <span class="feature-icon">{{ feature.icon }}</span>
-            </div>
+            <div class="feature-icon-wrap"></div>
             <div class="feature-img-wrap">
               <img
                 :src="feature.image"
@@ -79,8 +77,10 @@
                 class="feature-img"
               />
             </div>
-            <h3 class="feature-title">{{ feature.title }}</h3>
-            <p class="feature-desc">{{ feature.desc }}</p>
+            <div class="feature-text-wrap">
+              <h3 class="feature-title">{{ feature.title }}</h3>
+              <p class="feature-desc">{{ feature.desc }}</p>
+            </div>
           </div>
         </div>
  
@@ -211,22 +211,24 @@ const stats = [
  
 const features = [
   {
-    icon: '🌞',
     title: 'Premium and Custom Solar Panels',
     desc: 'CE/UKCA and MCS solar PV in standard or custom sizes delivered in bulk direct to you from China',
-    image: '/SolarPanels.jpg',
+    image: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SolarPanels.jpg',
   },
   {
-    icon: '💨',
     title: 'Mobile Batteries for Site Use',
     desc: 'Rugged, all-in-one batteries for construction, recycling, quarry and mobile uses - typically 30-100kWh',
-    image: '/WindTurbine.jpg',
+    image: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SitePower.png',
   },
   {
-    icon: '🔋',
     title: 'All-in-one BESS for static',
-    desc: 'For general commercial and industrial uses where a fixed system isappropriate - typically 200-5000kWh',
-    image: '/Batteries.jpg',
+    desc: 'For general commercial and industrial uses where a fixed system is appropriate - typically 200-5000kWh',
+    image: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/Batteries.jpg',
+  },
+  {
+    title: 'System Design & Optimisation',
+    desc: 'With our partners we assess what you need, design & manage the optimal system using simulation technology developed for power management in F1',
+    image: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/f1.jpg',
   },
 ]
  
@@ -259,12 +261,12 @@ const valueProps = [
 ]
  
 const showcaseImages = [
-  { src: '/RooftopSolar.jpg',   label: 'Rooftop Solar'    },
-  { src: '/WindTurbine.jpg',    label: 'Wind Power'       },
-  { src: '/Batteries.jpg',      label: 'Batteries'        },
-  { src: '/EVChargers.png',     label: 'EV Chargers'      },
-  { src: '/SiteLighting.png',   label: 'Site Lighting'    },
-  { src: '/SitePower.png',      label: 'Site Power'       },
+  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/RooftopSolar.jpg',   label: 'Rooftop Solar'    },
+  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/WindTurbine.jpg',    label: 'Wind Power'       },
+  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/Batteries.jpg',      label: 'Batteries'        },
+  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/EVChargers.png',     label: 'EV Chargers'      },
+  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SiteLighting.png',   label: 'Site Lighting'    },
+  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SitePower.png',      label: 'Site Power'       },
 ]
 </script>
  
@@ -460,7 +462,7 @@ const showcaseImages = [
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: 1.1rem;
   margin-bottom: 4rem;
 }
 .feature-card {
@@ -490,12 +492,19 @@ const showcaseImages = [
   font-weight: 700;
   color: #14532d;
   margin: 0.9rem 1.25rem 0.5rem;
+  height: 3rem;
 }
 .feature-desc {
   font-size: 0.92rem;
   color: #4b5563;
   line-height: 1.65;
   padding: 0 1.25rem 1.5rem;
+}
+
+.feature-text-wrap {
+  display: flex;
+  flex-direction: column;
+  ;
 }
  
 /* ── Value proposition strip ────────────────────────── */
