@@ -57,7 +57,7 @@
     <section class="features-section">
       <div class="w-full max-w-screen-xl mx-auto px-6">
         <div class="section-header animate-fade-in-up">
-          <p class="section-eyebrow">Why choose us</p>
+          <p class="section-eyebrow why-choose-us">Why choose us</p>
           <h2 class="section-title">Built for the Energy Revolution</h2>
         </div>
  
@@ -438,6 +438,10 @@ const showcaseImages = [
   color: #16a34a;
   font-weight: 600;
   margin-bottom: 0.5rem;
+}
+
+.section-eyebrow.why-choose-us {
+  font-size: 2rem;
 }
 .section-title {
   font-size: clamp(1.6rem, 3vw, 2.5rem);
