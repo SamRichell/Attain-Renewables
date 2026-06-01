@@ -102,21 +102,6 @@
       </div>
     </section>
  
-    <!-- ─── SHOWCASE / IMAGE STRIP ─────────────────────────────── -->
-    <section class="showcase-section">
-      <div class="showcase-track">
-        <div
-          v-for="(img, i) in showcaseImages"
-          :key="i"
-          class="showcase-card animate-fade-in-up"
-          :style="`animation-delay:${i * 0.1}s`"
-        >
-          <img :src="img.src" :alt="img.label" class="showcase-img" />
-          <div class="showcase-label">{{ img.label }}</div>
-        </div>
-      </div>
-    </section>
- 
     <!-- ─── MISSION ────────────────────────────────────────────── -->
     <section class="mission-section">
       <div class="w-full max-w-screen-xl mx-auto px-6 mission-grid">
@@ -259,15 +244,7 @@ const valueProps = [
     desc: 'We model your energy profile and assess system efficiency before you commit to a purchase.',
   },
 ]
- 
-const showcaseImages = [
-  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/RooftopSolar.jpg',   label: 'Rooftop Solar'    },
-  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/WindTurbine.jpg',    label: 'Wind Power'       },
-  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/Batteries.jpg',      label: 'Batteries'        },
-  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/EVChargers.png',     label: 'EV Chargers'      },
-  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SiteLighting.png',   label: 'Site Lighting'    },
-  { src: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SitePower.png',      label: 'Site Power'       },
-]
+
 </script>
  
 <style scoped>
