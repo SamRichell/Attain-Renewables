@@ -66,22 +66,18 @@ const isNotFound = ref(false)
 let abortController: AbortController | null = null
 
 const fetchPost = async () => {
-  console.log("start")
   // Cancel any ongoing request
   if (abortController) {
-    console.log("aborted")
     abortController.abort()
   }
 
-  console.log("not aborted")
   abortController = new AbortController()
   loading.value = true
   error.value = null
   isNotFound.value = false
   post.value = null
 
-  const baseUrl = "https://cdn.attainrenewables.com"#
-  console.log(baseUrl)
+  const baseUrl = "https://cdn.attainrenewables.com"
   if (!baseUrl) {
     error.value = 'Missing R2 base URL configuration'
     loading.value = false
@@ -93,9 +89,6 @@ const fetchPost = async () => {
     const response = await fetch(url, {
       signal: abortController.signal,
     })
-
-    console.log(url)
-    console.log(response)
 
     if (response.status === 404) {
       isNotFound.value = true
