@@ -35,7 +35,7 @@
           :key="post.id"
           class="bg-white rounded-lg shadow-md overflow-hidden"
         >
-          <img :src="'cdn.attainrenewables.com' + post.image" :alt="post.title" class="w-full h-48 object-cover" />
+          <img :src="'https://cdn.attainrenewables.com/blog/images/' + post.slug" :alt="post.title" class="w-full h-48 object-cover" />
           <div class="p-6">
             <p class="text-sm text-gray-500 mb-2">{{ post.date }}</p>
             <h2 class="text-xl font-semibold mb-2">{{ post.title }}</h2>
@@ -179,3 +179,9 @@ onUnmounted(() => {
   }
 })
 </script>
+
+<style>
+img {
+  object-fit: contain;
+}
+</style>
