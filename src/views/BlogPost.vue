@@ -90,6 +90,9 @@ const fetchPost = async () => {
       signal: abortController.signal,
     })
 
+    console.log(url)
+    console.log(response)
+
     if (response.status === 404) {
       isNotFound.value = true
       return
