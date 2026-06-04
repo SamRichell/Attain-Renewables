@@ -39,6 +39,7 @@
       <h1 class="text-4xl font-bold mb-2">{{ post.title }}</h1>
       <p class="text-gray-500 mb-10">{{ post.date }}</p>
       <div class="prose prose-lg max-w-none" v-html="post.content"></div>
+      <img :src="'https://cdn.attainrenewables.com/blog/images/' + post.slug" :alt="post.title" class="w-full object-cover" />
     </div>
   </div>
 </template>
