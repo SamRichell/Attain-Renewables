@@ -120,7 +120,7 @@ const fetchPosts = async () => {
   loading.value = true
   error.value = null
 
-  const baseUrl = import.meta.env.VITE_R2_BASE_URL
+  const baseUrl = "https://cdn.attainrenewables.com"
   if (!baseUrl) {
     error.value = 'Missing R2 base URL configuration'
     loading.value = false
