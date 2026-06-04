@@ -13,7 +13,7 @@
           style="object-fit: cover;"
         >
           <source
-            src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/videos/hero-bakground2.mp4"
+            src="https://cdn.attainrenewables.com/videos/hero-bakground2.mp4"
             type="video/mp4"
           />
         </video>
@@ -118,7 +118,7 @@
  
         <div class="mission-img-wrap animate-fade-in-up" style="animation-delay:0.2s">
           <img
-            src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/Suzhou.jpg"
+            src="https://cdn.attainrenewables.com/images/Suzhou.jpg"
             alt="Attain Renewables team or warehouse"
             class="mission-img"
           />
@@ -131,7 +131,7 @@
     <section class="cta-section">
       <div class="cta-bg">
         <img
-          src="https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/WindFarm.jpg"
+          src="https://cdn.attainrenewables.com/images/WindFarm.jpg"
           alt="Wind farm"
           class="cta-bg-img"
         />
@@ -149,7 +149,7 @@
  
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
- 
+
 // ── Scroll-triggered animations ────────────────────────────────────────────
 let observer = null
  
@@ -198,22 +198,22 @@ const features = [
   {
     title: 'Premium and Custom Solar Panels',
     desc: 'CE/UKCA and MCS solar PV in standard or custom sizes delivered in bulk direct to you from China',
-    image: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SolarPanels.jpg',
+    image: 'https://cdn.attainrenewables.com/images/SolarPanels.jpg',
   },
   {
     title: 'Mobile Batteries for Site Use',
     desc: 'Rugged, all-in-one batteries for construction, recycling, quarry and mobile uses - typically 30-100kWh',
-    image: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/SitePower.png',
+    image: 'https://cdn.attainrenewables.com/images/SitePower.png',
   },
   {
     title: 'All-in-one BESS for static',
     desc: 'For general commercial and industrial uses where a fixed system is appropriate - typically 200-5000kWh',
-    image: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/Batteries.jpg',
+    image: 'https://cdn.attainrenewables.com/images/Batteries.jpg',
   },
   {
     title: 'System Design & Optimisation',
     desc: 'With our partners we assess what you need, design & manage the optimal system using simulation technology developed for power management in F1',
-    image: 'https://pub-c553c44bda3541e4ad5961922b1beaed.r2.dev/images/f1.jpg',
+    image: 'https://cdn.attainrenewables.com/images/f1.jpg',
   },
 ]
  
@@ -523,48 +523,7 @@ const valueProps = [
   color: #6b7280;
   line-height: 1.55;
 }
- 
-/* ── Showcase strip ─────────────────────────────────── */
-.showcase-section {
-  padding: 4rem 0;
-  background: white;
-  overflow: hidden;
-}
-.showcase-track {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1.5rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0 1.5rem 1rem;
-  scrollbar-width: thin;
-  scrollbar-color: #86efac #f0fdf4;
-  scroll-snap-type: x mandatory;
-  height: 240px;
-}
-.showcase-card {
-  height: 210px;
-  flex: 0 0 320px;
-  border-radius: 14px;
-  flex-shrink: 0;
-  overflow: hidden;
-  position: relative;
-  scroll-snap-align: start;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  transition: transform 0.3s;
-}
-.showcase-card:hover { transform: scale(1.025); }
-.showcase-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.showcase-label {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: linear-gradient(transparent, rgba(5,46,22,0.82));
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 1.5rem 1rem 0.9rem;
-}
- 
+
 /* ── Mission ────────────────────────────────────────── */
 .mission-section { padding: 6rem 0; background: #f0fdf4; }
 .mission-grid {
@@ -572,7 +531,9 @@ const valueProps = [
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  border-top: 2px solid #dcfce7;
 }
+
 @media (max-width: 768px) { .mission-grid { grid-template-columns: 1fr; } }
 .mission-body {
   color: #374151;
