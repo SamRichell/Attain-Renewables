@@ -1,28 +1,30 @@
 <template>
   <div class="container mx-auto px-6 py-12">
     <div class="max-w-3xl mx-auto">
-      <h1 class="text-4xl font-bold text-center mb-6">About Attain Renewables</h1>
+      <h1 class="text-4xl font-bold text-center mb-1">About Attain Renewables</h1>
+      <h2 class="text-2xl font-bold text-center mb-6">A family business putting customers first.</h2>
       <div class="prose prose-lg text-gray-700">
         <p class="mb-4">
-          Founded in 2020, Attain Renewables is a dedicated importer of high‑quality renewable energy equipment. 
-          We partner with leading manufacturers across Europe and Asia to bring the latest solar, wind, and storage 
-          technologies to businesses and homeowners.
+          We are a family business based in the UK, China, EU and South 
+          America specialising in importing renewable energy systems, 
+          components and low energy products from China.
         </p>
         <p class="mb-4">
-          Our mission is to accelerate the transition to clean energy by providing reliable, cost‑effective products 
-          and expert guidance. Every component we supply is carefully tested to meet international standards and 
-          backed by comprehensive warranties.
-        </p>
-        <p class="mb-4">
-          Inspired by companies like Hampshire Imports, we believe in transparency, sustainability, and long‑term 
-          partnerships. Whether you’re a installer, business, or individual, we’re here to help you harness the power 
-          of renewable energy.
+          Language, business, and cultural difficulties of sourcing & 
+          importing from China can be quite a barrier - which is why we do it 
+          for you! We make the link to China's suppliers and factories and we 
+          bring the products to you.
         </p>
         <h2 class="text-2xl font-semibold mt-8 mb-2">Contact Us</h2>
+        <p class="mb-6">
+          📧 martin@attainrenewables.com<br>
+          📞 +44 (0)7388 568711<br>
+        </p>
         <p>
-          📧 hello@attainrenewables.com<br>
-          📞 +44 (0)123 456 7890<br>
-          📍 123 Green Energy Way, London, UK
+          Hampshire Imports Ltd<br>
+          Registered in England<br>
+          Company no: 14688270<br>
+          VAT no: 435096295
         </p>
       </div>
     </div>
