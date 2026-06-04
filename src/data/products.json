@@ -1,50 +1,44 @@
 [
   {
     "id": 1,
-    "name": "Monocrystalline Solar Panel 400W",
-    "description": "High-efficiency panel with 21% conversion rate, ideal for residential and commercial rooftops.",
-    "price": "€180",
-    "category": "Solar",
+    "name": "Mobile Battery Power",
+    "description": "Rugged battery power systems for use on site, at sizes to suit your needs.",
+    "category": "Battery",
     "image": "https://placehold.co/600x400?text=Solar+Panel"
   },
   {
     "id": 2,
-    "name": "Vertical Axis Wind Turbine 5kW",
-    "description": "Quiet, bird-friendly turbine perfect for urban and suburban environments.",
-    "price": "€4,200",
-    "category": "Wind",
+    "name": "Static battery systems",
+    "description": "From 100kW to 5MW, choose the BESS you need, providing the best value battery storage.",
+    "category": "Battery",
     "image": "https://placehold.co/600x400?text=Wind+Turbine"
   },
   {
     "id": 3,
-    "name": "Lithium-ion Battery 10kWh",
-    "description": "Modular storage system with 10-year warranty, scalable to 100kWh.",
-    "price": "€3,500",
-    "category": "Battery",
+    "name": "Solar Panels",
+    "description": "Solar panels in standard and custom sizes, delivered in bulk to keep the price down.",
+    "category": "Solar",
     "image": "https://placehold.co/600x400?text=Battery"
   },
   {
     "id": 4,
-    "name": "Bifacial Solar Panel 550W",
-    "description": "Generates power from both sides, boosting yield by up to 30%.",
-    "price": "€250",
+    "name": "Solar Lighting",
+    "description": "Mobile solar/battery and hybrid/battery lighting units to reduce your diesel consumption further.",
     "category": "Solar",
     "image": "https://placehold.co/600x400?text=Bifacial+Solar"
   },
   {
     "id": 5,
-    "name": "Horizontal Axis Wind Turbine 15kW",
-    "description": "Heavy-duty turbine for farms and small businesses.",
-    "price": "€12,800",
+    "name": "Wind Turbines",
+    "description": "Vertical and horizontal axis wind turbines that complement solar power generation",
     "category": "Wind",
-    "image": "https://placehold.co/600x400?text=Horizontal+Turbine"
+    "image": "https://placehold.co/600x400?text=Inverter"
   },
   {
     "id": 6,
-    "name": "Grid-Tie Inverter 8kW",
-    "description": "Smart inverter with monitoring app, compatible with all major brands.",
-    "price": "€950",
-    "category": "Inverter",
-    "image": "https://placehold.co/600x400?text=Inverter"
+    "name": "Inverters & Converters",
+    "description": "Inverters, 12V & 24V batteries, battery cells, cables and mounting systems, etc",
+    "category": "Inverter & Converter",
+    "image": "https://placehold.co/600x400?text=Horizontal+Turbine"
   }
 ]
